@@ -1,0 +1,7 @@
+laragon
+iniciar tudo
+http://localhost/nome-da-pasta
+
+xampp
+Apache -> starts
+http://localhost/meusite/arquivo.php
