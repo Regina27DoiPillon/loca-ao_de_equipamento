@@ -1,16 +1,21 @@
-<?php
-require_once __DIR__ . '/config.php';
- 
-function conectar() {
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . bd-host . ";dbname=" . bd-nome . ";charset=utf8",
-            bd-user,
-            bd-senha
-        );
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
-    } catch (PDOException $e) {
-        die("Erro na conexão: " . $e->getMessage());
-    }
+<?php 
+$host = "localhost";
+$banco = "locacao-equipamentos";
+$usuario = "root";
+$senha = "";
+
+try{
+    //cria novo objeto pdo (cada objeto funciona para o respectivo arquivo)
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$banco;charset=utf8mb4",
+        $usuario,
+        $senha,
+        [   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+        //equivale ao setAtribute
+    );
+    
+}catch(PDOException $e){
+    die("Falha na conexão: " . $e->getMessage());
 }

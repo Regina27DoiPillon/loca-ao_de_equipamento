@@ -1,91 +1,31 @@
 <?php
-require_once __DIR__ . '/config.php';
- 
-try {
-    // Conecta sem selecionar banco ainda, para poder criá-lo
-    $pdo = new PDO("mysql:host=" . <bd-host></bd-host> . ";charset=utf8", bd-user, bd-senha);
+$host = "localhost";
+$usuario = "root";
+$senha = "";
+
+//execução de tentativa
+try{
+    //PDO é uma classe nativa do php q sabe conversar com o banco de dados.
+    //O new cria o objeto, e o $pdo é a variável que guarda esse objeto.
+    $pdo = new PDO("mysql:host=$host;charset=utf8mb4", $usuario, $senha);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
- 
-    // Cria o banco de dados se não existir
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS " . bd-nome);
-    $pdo->exec("USE " . bd-nome);
- 
-    // Tabela usuário
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS usuario (
-            id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-            nome VARCHAR(120) NOT NULL,
-            email VARCHAR(150) UNIQUE NOT NULL,
-            senha VARCHAR(255) NOT NULL,
-            perfil VARCHAR(30) NOT NULL
-        )
-    ");
- 
-    // Tabela categoria
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS categoria (
-            id_categoria INT PRIMARY KEY AUTO_INCREMENT,
-            nome VARCHAR(100) NOT NULL,
-            descricao VARCHAR(255)
-        )
-    ");
- 
-    // Tabela equipamento
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS equipamento (
-            id_equipamento INT PRIMARY KEY AUTO_INCREMENT,
-            nome VARCHAR(120) NOT NULL,
-            descricao VARCHAR(255),
-            status VARCHAR(30),
-            id_categoria INT NOT NULL,
-            FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
-        )
-    ");
- 
-    // Tabela agendamento
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS agendamento (
-            id_agendamento INT PRIMARY KEY AUTO_INCREMENT,
-            data_inicio DATE NOT NULL,
-            data_fim DATE NOT NULL,
-            status VARCHAR(30),
-            id_usuario INT NOT NULL,
-            id_equipamento INT NOT NULL,
-            FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-            FOREIGN KEY (id_equipamento) REFERENCES equipamento(id_equipamento)
-        )
-    ");
- 
-    // Tabela EMPRESTIMO
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS emprestimo (
-            id_emprestimo INT PRIMARY KEY AUTO_INCREMENT,
-            data_retirada DATE NOT NULL,
-            data_prevista_devolucao DATE NOT NULL,
-            data_devolucao DATE,
-            status VARCHAR(30),
-            id_usuario INT NOT NULL,
-            id_equipamento INT NOT NULL,
-            FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-            FOREIGN KEY (id_equipamento) REFERENCES equipamento(id_equipamento)
-        )
-    ");
- 
-    // Tabela manutenção
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS manutencao (
-            id_manutencao INT PRIMARY KEY AUTO_INCREMENT,
-            data_manutencao DATE NOT NULL,
-            descricao VARCHAR(255),
-            tipo VARCHAR(50),
-            status VARCHAR(30),
-            id_equipamento INT NOT NULL,
-            FOREIGN KEY (id_equipamento) REFERENCES equipamento(id_equipamento)
-        )
-    ");
- 
-    echo "Sucesso!";
- 
-} catch (PDOException $e) {
-    die("Erro ao criar o banco: " . $e->getMessage());
+    //"chame este método do objeto"
+    //setAttribute recebe duas coisas: qual configuração mudar (ATTR_ERRMODE, o modo de tratar erros) e para qual valor (ERRMODE_EXCEPTION, lançar exceções).
+    $pdo->exec("create database if not exists locacao_equipamentos;");
+    //o pdo executa a frase no banco
+    $pdo->exec("use locacao_equipamentos;");
+
+
+    $pdo->exec("create table if not exists produtos(
+    id int auto_increment primary key,
+    nome varchar(250) not null,
+    preco decimal(250,2) not null,
+    inserido_em timestamp default current_timestamp
+    );");
+    echo"Banco de tabela criados com sucesso";
+
+}catch(PDOException $e){
+    echo""Error: " . $e->getMessage(); //aqui é onde mostra o erro
+
+    /* //configura o comportamento do objeto que já existe. O -> significa "chame este método do objeto". setAttribute recebe duas coisas: qual configuração mudar (ATTR_ERRMODE, o modo de tratar erros) e para qual valor (ERRMODE_EXCEPTION, lançar exceções). */
 }

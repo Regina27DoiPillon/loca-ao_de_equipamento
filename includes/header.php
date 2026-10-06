@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?php echo url; ?>decoracao/style.css">
 </head>
     <header class="flex row navbar-site space-between altura-centro">
-    <img src="<?php echo url; ?>/midia/icons/logomarca.png" alt="logo" class="h80 circulo">
+    <a href="<?php echo url; ?>cadastrar.php"><img src="<?php echo url; ?>/midia/icons/logomarca.png" alt="logo" class="h80 circulo"></a>
     <ul class="flex row gap50">
         <li class="lista">Categorias</li>
         <li class="lista">Agendamento</li>
@@ -20,6 +20,8 @@
         <button class="button" type="submit"><img src="https://cdn-icons-png.flaticon.com/512/3183/3183361.png" alt="procurar" class="h30"></button>
     </nav>
     
-    <img src="https://cdn-icons-png.flaticon.com/512/711/711769.png" alt="perfil" class="h50 circulo">
+    <a href="<?php echo url; ?>logar.php">
+        <img src="https://cdn-icons-png.flaticon.com/512/711/711769.png" alt="perfil" class="h50 circulo">
+    </a>
     </header>
 <body>

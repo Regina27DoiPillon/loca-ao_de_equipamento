@@ -1,0 +1,25 @@
+os dois modos são iguais.
+
+// Forma 1: opções no construtor
+$pdo = new PDO($dsn, $usuario, $senha, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+// Forma 2: setAttribute depois
+$pdo = new PDO($dsn, $usuario, $senha);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+o 'PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,' automatiza:
+[
+    "id" => 1,    0 => 1,
+    "nome" => "Ana",  1 => "Ana",
+    "email" => "ana@email.com",  2 => "ana@email.com"
+]
+para:
+[
+    "id" => 1,
+    "nome" => "Ana",
+    "email" => "ana@email.com"
+]
+
+ou seja, ao invés de trabalharmos com "vetores", trabalhamos como se estivesse manipulando variáveis, sem precisar fazer referência a vetores.
+Fica mais limpo, mais leve e mais legível, porque você acessa $usuario["nome"] em vez de $usuario[1].

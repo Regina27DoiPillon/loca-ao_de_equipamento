@@ -1,0 +1,51 @@
+PDO é uma classe nativa do php q sabe conversar com o banco de dados.
+O 'new' cria um objeto. $pdo é a variável que guarda esse objeto
+
+você está dizendo: "crie um objeto PDO, passando estas informações para ele se conectar". O new cria o objeto, e o $pdo é a variável que guarda esse objeto.
+
+Então $pdo não guarda host, usuário e senha para consulta. Ele guarda a conexão aberta com o MySQL. Host, usuário e senha são usados só no momento de conectar. Depois, você usa $pdo para mandar comandos ao banco ($pdo->prepare(...), $pdo->exec(...), $pdo->query(...)).
+
+Os três argumentos do new PDO(...)
+
+1. "mysql:host=$host;charset=utf8mb4" → chamado de DSN (Data Source Name), uma string de configuração:
+
+Parte	Significado
+mysql:	Qual driver usar (poderia ser pgsql:, sqlite: etc.)
+host=$host	Endereço do servidor (localhost)
+charset=utf8mb4	Codificação de caracteres da conexão (acentos, emojis, etc.)
+
+O $host dentro das aspas duplas é substituído pelo valor da variável, então vira "mysql:host=localhost;charset=utf8mb4".
+
+2. $usuario → o usuário do MySQL (root)
+
+3. $senha → a senha ("")
+
+Um detalhe sobre sua interpretação: o charset=utf8mb4 não é exatamente "poder ter vários tipos de caracteres". Ele define qual tabela de codificação será usada na comunicação entre PHP e MySQL. O utf8mb4 suporta praticamente todos os caracteres (acentos, símbolos, emojis), e por isso é o recomendado.
+
+O que faz a segunda linha
+php
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+Aqui você configura o comportamento do objeto que já existe. O -> significa "chame este método do objeto". setAttribute recebe duas coisas: qual configuração mudar (ATTR_ERRMODE, o modo de tratar erros) e para qual valor (ERRMODE_EXCEPTION, lançar exceções).
+
+Por padrão, o PDO não avisa direito quando uma query dá erro (dependendo da versão, pode falhar silenciosamente ou só emitir um warning). Com ERRMODE_EXCEPTION, qualquer erro vira uma exceção, que você captura com try/catch:
+php
+try {
+    $pdo->exec("comando SQL inválido");
+} catch (PDOException $e) {
+    echo $e->getMessage();   // mostra o erro
+}
+
+
+
+O erro de usuário/senha errados acontece na primeira linha (no new PDO(...)), porque é ali que a conexão é tentada. Como esse erro ocorre durante a criação do objeto, o setAttribute da segunda linha nem chega a ser executado.
+
+O setAttribute com ERRMODE_EXCEPTION é o que garante o mesmo comportamento para os erros de SQL que vêm depois (tabela inexistente, sintaxe errada, coluna que não existe, etc.).
+
+Resumindo com uma analogia
+php
+$pdo = new PDO(...);                 // liga para o banco (abre a conexão)
+$pdo->setAttribute(...);             // combina como ele deve avisar quando algo der errado
+$pdo->exec("CREATE DATABASE ...");   // agora manda os comandos
+
+$pdo é como o telefone já conectado com o banco de dados: você usa ele para falar com o banco, e o setAttribute só configura como ele deve te avisar sobre problemas.
