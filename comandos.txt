@@ -5,3 +5,6 @@ http://localhost/nome-da-pasta
 xampp
 Apache -> starts
 http://localhost/meusite/arquivo.php
+
+
+se a página não recarrega no f5, dê ctrl+shift+r

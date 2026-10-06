@@ -25,6 +25,8 @@ footer{
     background-color: aqua;
     display: flex;
     flex-direction: row;
+    /* position: fixed;
+    bottom: 0; */
 }
 
 
@@ -90,7 +92,12 @@ footer{
 .width90{
     width: 90%;
 }
-
+.borda{
+    border: solid;
+}
+.wrap{
+    flex-wrap: wrap;
+}
 
 @media (max-width: 768px) {
   .footer_responsividade {
