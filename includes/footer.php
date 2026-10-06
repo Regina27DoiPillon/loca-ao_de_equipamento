@@ -1,6 +1,6 @@
 <script src="<?php echo url; ?>decoracao/javascript.js"></script>
     <footer class="flex column meio-centro altura-centro space-between">
-        <div class="flex space-between width90">
+        <div class=" flex space-between width90 footer_responsividade">
             <div class="flex column meio-centro altura-centro gap30">
                 <h3>Catálogo</h3>
                 <br>
@@ -33,7 +33,7 @@
             </div>
             
         </div>
-        <p>© 2026 Loucadora de Equipamentos - CNPJ: 00.000.000/0001-00. Todos os direitos reservados.</p>
+        <p style="padding:15px">© 2026 Loucadora de Equipamentos - CNPJ: 00.000.000/0001-00. Todos os direitos reservados.</p>
     </footer>
 </body>
 

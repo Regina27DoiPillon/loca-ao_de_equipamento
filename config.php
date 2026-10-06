@@ -1,5 +1,5 @@
 <?php
-define('url', '/locacao-equipamento/');
+define('url', '/loca-ao_de_equipamento/');
 
 define('bd-host', 'localhost');
 define('bd-nome', 'locacao_equipamentos');

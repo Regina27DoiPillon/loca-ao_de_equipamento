@@ -20,8 +20,11 @@
 }
 footer{
     width: 100%;
-    height: 200px;
+    height: auto;
+    padding: 5px;
     background-color: aqua;
+    display: flex;
+    flex-direction: row;
 }
 
 
@@ -86,4 +89,14 @@ footer{
 }
 .width90{
     width: 90%;
+}
+
+
+@media (max-width: 768px) {
+  .footer_responsividade {
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 }
